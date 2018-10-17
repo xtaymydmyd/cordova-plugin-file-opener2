@@ -52,12 +52,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  	if(useContentType){
 		uti = (__bridge NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)contentType, NULL);
 	} else {
-	if([contentType length] == 0){
-		NSArray *dotParts = [path componentsSeparatedByString:@"."];
-		NSString *fileExt = [dotParts lastObject];
- 		uti = (__bridge NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)fileExt, NULL);
-	} else {
-		uti = (__bridge NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)contentType, NULL);
+		if([contentType length] == 0){
+			NSArray *dotParts = [path componentsSeparatedByString:@"."];
+			NSString *fileExt = [dotParts lastObject];
+			uti = (__bridge NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)fileExt, NULL);
+		} else {
+			uti = (__bridge NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)contentType, NULL);
+		}
 	}
 
 	dispatch_async(dispatch_get_main_queue(), ^{
